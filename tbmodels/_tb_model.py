@@ -673,17 +673,17 @@ class Model(HDF5Enabled):
         lines = (l for l in lines if l)
         lines = (l.lower() for l in lines)
 
-        split_token = re.compile('[ :=\t]+')
+        split_token = re.compile('[\t :=]+')
 
         mapping = {}
         for l in lines:
             if l.startswith('begin'):
-                key = split_token.split(l[5:].strip(' :='), 1)[0]
+                key = split_token.split(l[5:].strip('\t :='), 1)[0]
                 val = []
                 while True:
                     l = next(lines)
                     if l.startswith('end'):
-                        end_key = split_token.split(l[3:].strip(' :='), 1)[0]
+                        end_key = split_token.split(l[3:].strip('\t :='), 1)[0]
                         assert end_key == key
                         break
                     else:
